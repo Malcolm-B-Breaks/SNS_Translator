@@ -1,0 +1,78 @@
+en:
+  system_prompts:
+    analyzer_prompt: 'You are a data analyst specializing in social media. You will be tasked with analyzing posts from social media and categorizing these posts based on their content.'
+    translator_prompt_1: 'You are a master translator fluent in all languages and well learned in all cultures of the world.'
+
+  user_prompts:
+    analyzer_prompt: 'Please analyze and present a summary of each of the following social media posts saved as JSON data, and classify each of them into one of these categories ("looking_for_members", "job recruitment", "events", "for sale/ free", "store opening", "new menu product", "seeking advice", "please share"): '
+    translator_prompt_1: 'Translate the following social media post according to these rules:
+      1. Identify the original language of the text.
+      2. Translate it into all other five languages from this list: English, Japanese, Vietnamese, Korean, Simplified Chinese, and Traditional Chinese.
+      # 3. Do not include the original text in the output.
+      3. Include the original text in the output next to its language as shown below.
+      4. Maintain the original formatting and line breaks as closely as possible.
+      5. Do not include any additional commentary or information outside of the translations.
+      6. Clearly separate each translation by language along with the original text, labeling them as follows:
+          English: [Translated text]
+          Japanese: [Translated text]
+          Korean: [Translated text]
+          Simplified Chinese: [Translated text]
+          Traditional Chinese: [Translated text]
+          Vietnamese: [Translated text]
+      7. Do not include any additional commentary or information outside of the translations.
+      8. If there is no text to be translated, simple return any other tags or data that are present. DO NOT LEAVE AREAS BLANK.
+      9. Make sure that there is the right number of translations and corresponding outputs for each language.
+      10. Be sure to keep all HTML tags, emojis, and other formatting intact in both the original and your translations.
+      Here is the content to be translated: '
+
+  rerun_prompts:
+    translation_rerun_prompt: 'This is a rerun of the task. You failed to produce the desired outcome the previous time. Please take a look at the following output, compare it to the rules stated for the task, and make sure to not repeat the errors. Likely, sections were left blank or the output was not in the correct format.'
+
+  response_format:
+    format:
+      json: {"type": "json_object"}
+    prompt:
+      json: 'Please ONLY give your response in the form of an indexed JSON object with the schema { data: {"id" : "integer", "cl_id" : "integer", "category" : "string", "reasoning" : "string"}}, replacing the data types ("integer", "string", "bolean", "array", "date") with the corresponding responses and information, with no additional commentary or information outside of the JSON response and with no linebreaks or additional formatting outisde of the JSON format. Please return ONLY unformatted JSON data. Thank you!'
+
+
+  categories:
+    - 'looking_for_members'
+    - 'job recruitment'
+    - 'events'
+    - 'for sale/ free'
+    - 'store opening'
+    - 'new menu product'
+    - 'seeking advice'
+    - 'please share'
+
+  keywords:
+    category_keywords:
+      looking_for_members:
+        - 'members'
+        - 'new'
+      job_recruitment:
+        - 'job'
+        - 'recruiting'
+        - 'now hiring'
+      events:
+        - 'event'
+      for_sale_free:
+        - 'sale'
+        - 'buy'
+        - 'free'
+        - 'giveaway'
+      store_opening:
+        - 'opening'
+        - 'new store'
+        - 'now open'
+      new_menu_product:
+        - 'menu'
+        - 'seasonal'
+        - 'new'
+      seeking_advice:
+        - 'advice'
+        - 'answer'
+        - 'question'
+      please_share:
+        - 'share'
+        - 'follow'

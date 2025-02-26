@@ -1,0 +1,6 @@
+__pycache__
+.venv
+ai_models/*
+input/*
+output/*
+.env
