@@ -3,4 +3,5 @@ __pycache__
 ai_models/*
 input/*
 output/*
+logs/*
 .env

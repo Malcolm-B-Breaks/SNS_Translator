@@ -19,7 +19,7 @@ en:
           Simplified Chinese: [Translated text]
           Traditional Chinese: [Translated text]
           Vietnamese: [Translated text]
-      7. Do not include any additional commentary or information outside of the translations.
+      7. Do not add blank lines between the translations.
       8. If there is no text to be translated, simple return any other tags or data that are present. DO NOT LEAVE AREAS BLANK.
       9. Make sure that there is the right number of translations and corresponding outputs for each language.
       10. Be sure to keep all HTML tags, emojis, and other formatting intact in both the original and your translations.

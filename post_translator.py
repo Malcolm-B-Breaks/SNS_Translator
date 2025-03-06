@@ -1,6 +1,9 @@
 import re
+import os
+import glob
 import yaml
 import pandas as pd
+from datetime import datetime
 from langchain_core.messages import SystemMessage, HumanMessage
 
 
@@ -50,7 +53,6 @@ def post_translator(language, model, previous_data=None):
                     ],
                 )
                 ai_message = output.choices[0].message.content
-                # print(ai_message)
 
             elif model == "axios" or model == "veritas":
                 messages = [
@@ -60,7 +62,12 @@ def post_translator(language, model, previous_data=None):
                 ai_message.append(re.sub(r'<think>[\s\S]*?</think>', '', agent.invoke(messages)))
                 # ai_message = agent.invoke(messages)
 
-                # print(ai_message)
+            print(ai_message)
+            dateAndTime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            log = open(f"./logs/ai_output_log_{dateAndTime}.txt", "w", encoding='utf-8')
+            # log.write('\n'.join(ai_message))
+            log.write(f'AI output at {dateAndTime}: {".\n".join(ai_message)}')
+            log.close()
 
             languages = ['English', 'Japanese', 'Korean', 'Simplified Chinese', 'Traditional Chinese', 'Vietnamese']
             language_list = {each_language: [] for each_language in languages}
@@ -83,7 +90,6 @@ def post_translator(language, model, previous_data=None):
 
     content_list = [titles_dict, bodies_dict]
 
-
     print(content_list)
     for l in content_list[0]:
         print(l + " has the following bodies: " + str(content_list[1][l]))
@@ -94,7 +100,14 @@ def post_translator(language, model, previous_data=None):
             dataframe.to_csv(f'./output/cl_news_{l}.csv')
         except:
             if error_counter < 3:
-                print("Still not getting it right")
+                print("Still not getting it right. Attempt #" + str(error_counter + 1))
+                log_folder = './logs'
+                log_type = '*.txt'
+                logs = glob.glob(f'{log_folder}/{log_type}')
+                latest_log = max(logs, key=os.path.getctime)
+                log = open(latest_log, "a", encoding='utf-8')
+                log.write(f'\n\n**Failure occurred at {datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}**')
+                log.close()
                 post_translator(language, model, content_list)
                 error_counter += 1
             elif error_counter <= 3:
