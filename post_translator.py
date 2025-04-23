@@ -110,5 +110,5 @@ def post_translator(language, model, previous_data=None):
                 log.close()
                 post_translator(language, model, content_list)
                 error_counter += 1
-            elif error_counter <= 3:
+            elif error_counter == 3:
                 raise Exception("I give up")
